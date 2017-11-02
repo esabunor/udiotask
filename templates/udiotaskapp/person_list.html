@@ -3,6 +3,7 @@
     People
 {% endblock %}
 {% block content %}
+    <h3 class="header {{ primary_text_color }}">Person List</h3>
     <form action="" method="get">
         <div class="row">
             <div class="col m6 s12">
@@ -43,9 +44,10 @@
             </tbody>
         </table>
     {% else %}
-        <h4 class="blue-text">
+        <h4 class="teal-text center-align">
             No Person
         </h4>
     {% endif %}
+    {% include "includes/paginator.html" %}
 
 {% endblock %}

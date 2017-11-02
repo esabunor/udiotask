@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    <h3 class="header {{ primary_text_color }}">Person List API</h3>
     <form>
         <div class="row">
             <div class="col m6 s12">
@@ -35,29 +36,34 @@
       </div>
     </div>
     <table>
-            <thead>
-              <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-              </tr>
-            </thead>
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Email</th>
+          </tr>
+        </thead>
 
-            <tbody>
-            </tbody>
-        </table>
+        <tbody>
+        </tbody>
+    </table>
 {% endblock %}
 {% block scripts %}
     <script>
     $(document).ready(function () {
             var search = $('#search-button');
+            $.get("{% url 'person_api_list' %}", {}, function(data, textStatus, jqXHR){
+                   jQuery(data).each(function (i, person) {
+
+                        $('tbody').append("<tr><td>" +  person.name + "</td><td>" + person.email + "</td></tr>");
+
+                    });
+            });
             search.click(function (e) {
                var filter_name = $("input[name='name']").val();
                var filter_email = $("input[name='email']").val();
                $('.center-align').toggleClass('hide');
                $('table').toggleClass('hide');
                $.get("{% url 'person_api_list' %}", {"name":filter_name, "email":filter_email}, function(data, textStatus, jqXHR){
-                   if(data == null)
-
                    $('tbody > tr').remove();
                    $('.center-align').toggleClass('hide');
                    $('table').toggleClass('hide');
