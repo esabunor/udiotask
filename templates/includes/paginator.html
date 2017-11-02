@@ -1,0 +1,64 @@
+{% if is_paginated %}
+    <ul class="pagination center-align">
+    {% if paginator.num_pages < 5 %}
+        {% for number in paginator.page_range %}
+            {% if number == page_obj.number %}
+                <li class="active brown"><a href="?page={{ number }}">{{ number }}</a></li>
+            {% else %}
+                <li class="wave-effect"><a href="?page={{ number }}">{{ number }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% if page_obj.number|add:"2" in paginator.page_range and page_obj.number|add:"-2" in paginator.page_range %}
+            {# o o x o o #}
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number|add:"-1" }}">{{ page_obj.previous_page_number|add:"-1" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+            <li class="active brown"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number|add:"1" }}">{{ page_obj.next_page_number|add:"1" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number|add:"2" }}">{{ page_obj.next_page_number|add:"2" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+        {% if not page_obj.number|add:"2" in paginator.page_range and page_obj.has_next %}
+            {# o o o x o #}
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number|add:"-2" }}">{{ page_obj.previous_page_number|add:"-2" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number|add:"-1" }}">{{ page_obj.previous_page_number|add:"-1" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+            <li class="active brown"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+        {% if not page_obj.number|add:"-2" in paginator.page_range and page_obj.has_next and page_obj.has_previous %}
+            {# o x o o o #}
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+            <li class="active brown"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number|add:"1" }}">{{ page_obj.next_page_number|add:"1" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number|add:"2" }}">{{ page_obj.next_page_number|add:"2" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+        {% if not page_obj.has_previous %}
+            {# x o o o o #}
+            <li class="disabled"><a href=""><i class="material-icons">chevron_left</i></a></li>
+            <li class="active brown"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number|add:"1" }}">{{ page_obj.next_page_number|add:"1" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number|add:"2" }}">{{ page_obj.next_page_number|add:"2" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number|add:"3" }}">{{ page_obj.next_page_number|add:"3" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+        {% if not page_obj.has_next %}
+            {# o o o o x #}
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number|add:"-3"  }}">{{ page_obj.previous_page_number|add:"-3"  }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number|add:"-2" }}">{{ page_obj.previous_page_number|add:"-2" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number|add:"-1" }}">{{ page_obj.previous_page_number|add:"-1" }}</a></li>
+            <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+            <li class="active brown"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            <li class="disabled"><a href=""><i class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+    {% endif %}
+    </ul>
+    {% endif %}

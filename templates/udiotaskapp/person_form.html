@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}
+    Add a Person
+{% endblock %}
+{% block content %}
+    <form action="" method="post">
+        <div class="row">
+            <div class="col m6 s12">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">email</i>
+                  {{ form.email }}
+                  <label for="{{ form.email.id_for_label }}" date-error="{{ form.email.errors }}">Email</label>
+                </div>
+            </div>
+            <div class="col m6 s12">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">account_circle</i>
+                  {{ form.name }}
+                  <label for="{{ form.name.id_for_label }}" date-error="{{ form.name.errors }}">Name</label>
+                </div>
+            </div>
+        </div>
+        {% csrf_token %}
+        <button class="btn waves-effect waves-light" type="submit" name="action">Add Person
+            <i class="material-icons right">add</i>
+        </button>
+    </form>
+{% endblock %}

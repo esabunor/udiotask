@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+    <form>
+        <div class="row">
+            <div class="col m6 s12">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">email</i>
+                  {{ form.email }}
+                  <label for="{{ form.email.id_for_label }}" date-error="{{ form.email.errors }}">Email</label>
+                </div>
+            </div>
+            <div class="col m6 s12">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">account_circle</i>
+                  {{ form.name }}
+                  <label for="{{ form.name.id_for_label }}" date-error="{{ form.name.errors }}">Name</label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <button id="search-button" class="btn waves-effect waves-light" type="submit" name="action">Search
+            <i class="material-icons right">search</i>
+        </button>
+    <div class="center-align hide">
+        <div class="preloader-wrapper active ">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table>
+            <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+        </table>
+{% endblock %}
+{% block scripts %}
+    <script>
+    $(document).ready(function () {
+            var search = $('#search-button');
+            search.click(function (e) {
+               var filter_name = $("input[name='name']").val();
+               var filter_email = $("input[name='email']").val();
+               $('.center-align').toggleClass('hide');
+               $('table').toggleClass('hide');
+               $.get("{% url 'person_api_list' %}", {"name":filter_name, "email":filter_email}, function(data, textStatus, jqXHR){
+                   if(data == null)
+
+                   $('tbody > tr').remove();
+                   $('.center-align').toggleClass('hide');
+                   $('table').toggleClass('hide');
+                   jQuery(data).each(function (i, person) {
+
+                        $('tbody').append("<tr><td>" +  person.name + "</td><td>" + person.email + "</td></tr>");
+
+                    });
+               });
+            });
+    });
+    </script>
+{% endblock %}
